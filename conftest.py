@@ -1,23 +1,25 @@
 import pytest
 import requests
 import time
-
-BASE_URL = "https://stellarburgers.education-services.ru/api"
+from data.urls import AUTH_REGISTER, AUTH_USER
+from data.test_data import USER_NAMES, PASSWORDS
 
 
 @pytest.fixture
-def create_user():
+def create_and_delete_user():
+    """Создаёт пользователя и удаляет его после теста"""
     email = f"test_user_{int(time.time())}@yandex.ru"
-    password = "TestPass123"
-    name = "Тестовый пользователь"
-
     payload = {
         "email": email,
-        "password": password,
-        "name": name
+        "password": PASSWORDS["default"],
+        "name": USER_NAMES["ivan"]
     }
 
-    response = requests.post(f"{BASE_URL}/auth/register", json=payload)
+    response = requests.post(AUTH_REGISTER, json=payload)
     token = response.json().get("accessToken")
 
-    yield {"email": email, "password": password, "name": name, "token": token}
+    yield {"email": email, "password": PASSWORDS["default"], "name": USER_NAMES["ivan"], "token": token}
+
+    # Удаляем пользователя после теста
+    if token:
+        requests.delete(AUTH_USER, headers={"Authorization": token})
