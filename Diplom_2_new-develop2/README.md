@@ -1,0 +1,8 @@
+# API-тесты для Stellar Burgers
+
+## Описание
+Автотесты для API сервиса Stellar Burgers.
+
+## Установка
+```bash
+pip install requests allure-pytest pytest
