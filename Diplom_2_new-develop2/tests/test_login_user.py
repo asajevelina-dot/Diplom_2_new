@@ -3,6 +3,7 @@ import pytest
 import requests
 from data.urls import AUTH_LOGIN
 from data.test_data import PASSWORDS
+from data.error_messages import ErrorMessages
 
 
 @allure.suite("Логин пользователя")
@@ -38,4 +39,4 @@ class TestLoginUser:
 
         with allure.step("Проверить код ответа 401"):
             assert response.status_code == 401
-            assert response.json()["message"] == "email or password are incorrect"
+            assert response.json()["message"] == ErrorMessages.EMAIL_OR_PASSWORD_INCORRECT

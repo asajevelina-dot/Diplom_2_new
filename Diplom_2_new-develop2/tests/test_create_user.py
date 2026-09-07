@@ -25,7 +25,7 @@ class TestCreateUser:
             assert response.status_code == 200
             assert response.json()["success"] is True
 
-        # Удаляем пользователя после теста
+        # ✅ УДАЛЯЕМ ПОЛЬЗОВАТЕЛЯ ПОСЛЕ ТЕСТА
         token = response.json().get("accessToken")
         if token:
             with allure.step("Удалить созданного пользователя"):
@@ -51,7 +51,7 @@ class TestCreateUser:
             assert response.status_code == 403
             assert response.json()["message"] == "User already exists"
 
-        # Удаляем пользователя после теста
+        # ✅ УДАЛЯЕМ ПОЛЬЗОВАТЕЛЯ ПОСЛЕ ТЕСТА
         if token:
             with allure.step("Удалить созданного пользователя"):
                 requests.delete(AUTH_USER, headers={"Authorization": token})

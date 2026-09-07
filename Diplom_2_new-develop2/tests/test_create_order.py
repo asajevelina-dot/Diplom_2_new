@@ -3,6 +3,7 @@ import requests
 import time
 from data.urls import AUTH_REGISTER, ORDERS
 from data.test_data import PASSWORDS, USER_NAMES, INGREDIENT_IDS
+from data.error_messages import ErrorMessages
 
 
 @allure.suite("Создание заказа")
@@ -47,7 +48,7 @@ class TestCreateOrder:
 
         with allure.step("Проверить код ответа 400"):
             assert response.status_code == 400
-            assert response.json()["message"] == "Ingredient ids must be provided"
+            assert response.json()["message"] == ErrorMessages.INGREDIENT_IDS_REQUIRED
 
     @allure.title("Создание заказа с неверным хешем ингредиентов")
     def test_create_order_invalid_ingredient_hash(self):
